@@ -4,7 +4,7 @@
 package com.bnf.webServices.lotusWs;
 
 /**
- * @author salimchouaf
+ * @author 
  *
  */
 public interface bnfLotusWs {
