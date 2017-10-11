@@ -16,5 +16,10 @@ import javax.jws.soap.SOAPBinding.Style;
 @WebService
 @SOAPBinding(style=Style.RPC)
 public interface bnfLotusWs {
+	
+	/**
+	 * @param libCode
+	 * @return
+	 */
 	@WebMethod String getLibPoste(@WebParam(name="libCode") String libCode);
 }
