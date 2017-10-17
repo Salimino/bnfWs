@@ -40,8 +40,10 @@ public class bnfLotusWsImpl implements bnfLotusWs {
 	public String getLibPoste(String libCode) {
 		// TODO Auto-generated method stub
 		// Creation session OpenHR
+		String applicationRoot = System.getProperties().getProperty("applicationRoot");
 
-		File openHrConfFile = new File("/Users/salimchouaf/git/bnfWs/bnfWs/conf/openhr.properties");
+		File openHrConfFile = new File(
+				applicationRoot.concat("/../bnfWs-0.0.1-SNAPSHOT/WEB-INF/conf/openhr.properties"));
 		openHrSession = creatOpenHrSession(openHrConfFile);
 		lotusUser = userConnect(openHrSession, USERID, USERPWD);
 		lotusUserRole = lotusUser.getRole("ALLHRLO");
@@ -49,7 +51,7 @@ public class bnfLotusWsImpl implements bnfLotusWs {
 		setContext(lotusUser, lotusUserRole);
 		execSqlOrder(getLibPostOrder);
 		closeContext();
-		
+
 		return "Libelle TOTO";
 	}
 

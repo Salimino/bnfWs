@@ -21,5 +21,6 @@ public interface bnfLotusWs {
 	 * @param libCode
 	 * @return
 	 */
-	@WebMethod String getLibPoste(@WebParam(name="libCode") String libCode);
+	@WebMethod String getLibPoste(@WebParam(name="libCode") String libCode);	
+	
 }
