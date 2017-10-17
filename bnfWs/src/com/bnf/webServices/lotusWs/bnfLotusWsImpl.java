@@ -24,12 +24,13 @@ import com.hraccess.openhr.exception.UserConnectionException;
 public class bnfLotusWsImpl implements bnfLotusWs {
 
 	private static final String USERID = "HR";
-	private static final String USERPWD = "HR";
+	private static final String USERPWD = "RH2017!!";
 	private IHRSession openHrSession;
 	private IHRUser lotusUser;
 	private IHRRole lotusUserRole;
 	private HRExtractionSource extractionSource;
 	private TDataNode node;
+	private ArrayList<String> libPoste;
 
 	/*
 	 * (non-Javadoc)
@@ -46,13 +47,15 @@ public class bnfLotusWsImpl implements bnfLotusWs {
 				applicationRoot.concat("/../bnfWs-0.0.1-SNAPSHOT/WEB-INF/conf/openhr.properties"));
 		openHrSession = creatOpenHrSession(openHrConfFile);
 		lotusUser = userConnect(openHrSession, USERID, USERPWD);
-		lotusUserRole = lotusUser.getRole("ALLHRLO");
-		String getLibPostOrder = "SELECT * FROM ZT00";
+		lotusUserRole = lotusUser.getRole("ALLHRLO(FR)");
+		String getLibPostOrder = "Select LBPSSH from ZA01 b, ZA00 a where a.nudoss = b.nudoss and a.IDPS00 = '"+libCode+"'";
 		setContext(lotusUser, lotusUserRole);
 		execSqlOrder(getLibPostOrder);
+		libPoste= nodeToList(node);
 		closeContext();
+		openHrSession.disconnect();
 
-		return "Libelle TOTO";
+		return libPoste.get(0);
 	}
 
 	public IHRSession creatOpenHrSession(File confFile) {
@@ -70,7 +73,7 @@ public class bnfLotusWsImpl implements bnfLotusWs {
 	public IHRUser userConnect(IHRSession session, String userID, String userPwd) {
 		IHRUser user = null;
 		try {
-			user = session.connectUser(userID, userID);
+			user = session.connectUser(userID, userPwd);
 		} catch (AuthenticationException | UserConnectionException | IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
